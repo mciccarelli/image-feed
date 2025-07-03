@@ -9,7 +9,7 @@ interface ImageDetailContentProps {
 
 export function ImageDetailContent({ image }: ImageDetailContentProps) {
   return (
-    <div className="h-full flex items-center justify-center p-8 md:p-20 bg-muted/30">
+    <div className="h-[50vh] md:h-full flex items-center justify-center p-4 md:p-20 bg-muted/30">
       <div className="relative w-full h-full max-w-4xl">
         <Image
           src={image.urls.regular}

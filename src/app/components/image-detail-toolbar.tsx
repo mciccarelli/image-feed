@@ -1,47 +1,34 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, User, MapPin, Calendar, Eye, Download, Heart } from 'lucide-react';
+import { ArrowLeft, MapPin, Calendar, Eye, Download, Heart } from 'lucide-react';
 import { UnsplashImage } from '@/app/lib/types';
+import { formatDate, formatNumber } from '@/app/lib/utils';
 
 interface ImageDetailToolbarProps {
   image: UnsplashImage;
 }
 
 export function ImageDetailToolbar({ image }: ImageDetailToolbarProps) {
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return '';
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
-
-  const formatNumber = (num?: number) => {
-    if (!num) return '0';
-    return num.toLocaleString();
-  };
-
   return (
-    <div className="fixed top-10 left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border">
-      <div className="flex items-center justify-between px-4 py-2 h-10">
+    <div className="fixed h-10 top-16 md:top-0 left-0 md:left-48 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border text-xs font-mono">
+      <div className="flex items-center justify-between px-4 py-2">
         {/* Left side - Back button and title */}
         <div className="flex items-center space-x-3 min-w-0 flex-1">
-          <Link href="/" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors">
+          <Link href="/" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors font-mono">
             <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm">Back</span>
+            <span>Back</span>
           </Link>
 
           <div className="w-px h-6 bg-border" />
 
           <div className="min-w-0 flex-1">
-            <h1 className="text-sm font-medium text-foreground truncate">{image.description || image.alt_description || 'Untitled'}</h1>
+            <h1 className="text-foreground truncate">{image.description || image.alt_description || 'Untitled'}</h1>
           </div>
         </div>
 
         {/* Right side - Image stats */}
-        <div className="flex items-center space-x-4 text-xs text-muted-foreground">
+        <div className="flex items-center space-x-4 text-xs text-muted-foreground font-mono">
           {image.likes && (
             <div className="flex items-center space-x-1">
               <Heart className="w-3 h-3" />

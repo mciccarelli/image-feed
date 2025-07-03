@@ -2,13 +2,12 @@
 
 import * as React from 'react';
 import { useAtom } from 'jotai';
-import { gridSizeAtom, GRID_SIZES, GridSize } from '@/app/state/grid';
+import { gridSizeAtom } from '@/app/state/grid';
 
 export function GridSizeToggle() {
   const [gridSize, setGridSize] = useAtom(gridSizeAtom);
   const [mounted, setMounted] = React.useState(false);
 
-  // Prevent hydration mismatch
   React.useEffect(() => {
     setMounted(true);
   }, []);
@@ -17,24 +16,30 @@ export function GridSizeToggle() {
     return null;
   }
 
-  return (
-    <div className="flex items-center justify-between">
-      <span className="text-sm font-medium">columns</span>
+  const isLarge = gridSize === 'xl';
 
-      <div className="flex items-center space-x-1">
-        {Object.entries(GRID_SIZES).map(([size, columns]) => (
-          <button
-            key={size}
-            onClick={() => setGridSize(size as GridSize)}
-            className={`px-2 py-1 text-xs rounded transition-colors ${
-              gridSize === size ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-            }`}
-            aria-label={`Set grid to ${columns} columns`}
-          >
-            {columns}
-          </button>
-        ))}
-      </div>
-    </div>
+  const toggleGrid = () => {
+    setGridSize(isLarge ? 'medium' : 'xl');
+  };
+
+  return (
+    <button
+      onClick={toggleGrid}
+      className="relative inline-flex h-7.5 w-14 items-center rounded-full bg-muted border border-border transition-all duration-300 ease-in-out hover:bg-accent"
+      aria-label={`Switch to ${isLarge ? '3' : '5'} columns`}
+    >
+      <span
+        className="absolute h-6 w-6 transform rounded-full bg-background border border-border transition-transform duration-300 ease-in-out"
+        style={{
+          transform: isLarge ? 'translateX(1.75rem)' : 'translateX(0.125rem)',
+        }}
+      />
+
+      {/* 3 columns indicator */}
+      <span className={`absolute left-2.5 text-xs font-mono font-normal transition-opacity ${isLarge ? 'opacity-40' : 'opacity-100'}`}>3</span>
+
+      {/* 5 columns indicator */}
+      <span className={`absolute right-2.5 text-xs font-mono font-normal transition-opacity ${isLarge ? 'opacity-100' : 'opacity-40'}`}>5</span>
+    </button>
   );
 }

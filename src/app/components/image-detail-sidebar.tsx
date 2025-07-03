@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Share2, Download, ExternalLink, Copy, Tag } from 'lucide-react';
+import { Share2, Download, ExternalLink, Copy } from 'lucide-react';
 import { UnsplashImage } from '@/app/lib/types';
 import { FavoriteButton } from './favorite-button';
 
@@ -50,51 +50,45 @@ export function ImageDetailSidebar({ image }: ImageDetailSidebarProps) {
   };
 
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="p-4 space-y-6">
-        {/* Actions */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-foreground">Actions</h3>
-
-          <div className="flex items-center space-x-2">
+    <div className="h-full overflow-y-auto font-mono text-xs bg-background">
+      {/* Actions */}
+      <div className="border-b border-border">
+        <div className="px-3 py-2 bg-muted/50 border-b border-border">
+          <h3 className="text-xs font-medium text-foreground uppercase tracking-wide">ACTIONS</h3>
+        </div>
+        <div className="p-3">
+          <div className="flex items-center gap-1">
             <FavoriteButton image={image} />
             <button
               onClick={handleShare}
-              className="flex items-center space-x-2 px-3 py-2 rounded-md bg-muted hover:bg-accent hover:text-accent-foreground transition-colors text-sm"
+              className="flex items-center justify-center p-1.5 hover:bg-accent hover:text-accent-foreground transition-colors border border-border"
+              title={copySuccess ? 'Copied!' : 'Share'}
             >
-              {copySuccess ? (
-                <>
-                  <Copy className="w-4 h-4" />
-                  <span>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Share2 className="w-4 h-4" />
-                  <span>Share</span>
-                </>
-              )}
+              {copySuccess ? <Copy className="w-3 h-3" /> : <Share2 className="w-3 h-3" />}
             </button>
 
             <button
               onClick={handleDownload}
-              className="flex items-center space-x-2 px-3 py-2 rounded-md bg-muted hover:bg-accent hover:text-accent-foreground transition-colors text-sm"
+              className="flex items-center justify-center p-1.5 hover:bg-accent hover:text-accent-foreground transition-colors border border-border"
+              title="Download"
             >
-              <Download className="w-4 h-4" />
-              <span>Download</span>
+              <Download className="w-3 h-3" />
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Author Info */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-foreground">Author</h3>
-          <div className="flex items-center space-x-3">
-            {image.user.profile_image?.medium && (
-              <img src={image.user.profile_image.medium} alt={image.user.name} className="w-10 h-10 rounded-full" />
-            )}
-            <div>
-              <p className="font-medium text-foreground">{image.user.name}</p>
-              {image.user.username && <p className="text-sm text-muted-foreground">@{image.user.username}</p>}
+      {/* Author Info */}
+      <div className="border-b border-border">
+        <div className="px-3 py-2 bg-muted/50 border-b border-border">
+          <h3 className="text-xs font-medium text-foreground uppercase tracking-wide">AUTHOR</h3>
+        </div>
+        <div className="p-3 space-y-2">
+          <div className="flex items-center space-x-2">
+            {image.user.profile_image?.medium && <img src={image.user.profile_image.medium} alt={image.user.name} className="w-6 h-6 rounded" />}
+            <div className="min-w-0 flex-1">
+              <p className="font-medium text-foreground truncate">{image.user.name}</p>
+              {image.user.username && <p className="text-muted-foreground truncate">@{image.user.username}</p>}
             </div>
           </div>
 
@@ -103,129 +97,143 @@ export function ImageDetailSidebar({ image }: ImageDetailSidebarProps) {
               href={image.user.links.html}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors"
             >
-              <ExternalLink className="w-4 h-4" />
-              <span>View on Unsplash</span>
+              <ExternalLink className="w-3 h-3" />
+              <span>UNSPLASH</span>
             </Link>
           )}
         </div>
+      </div>
 
-        {/* Image Details */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-foreground">Details</h3>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Dimensions</span>
+      {/* Image Details */}
+      <div className="border-b border-border">
+        <div className="px-3 py-2 bg-muted/50 border-b border-border">
+          <h3 className="text-xs font-medium text-foreground uppercase tracking-wide">DETAILS</h3>
+        </div>
+        <div className="p-3">
+          <div className="space-y-1">
+            <div className="flex justify-between py-1 border-b border-border">
+              <span className="text-muted-foreground">DIM</span>
               <span className="text-foreground">
-                {image.width} × {image.height}
+                {image.width}×{image.height}
               </span>
             </div>
 
             {image.likes && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Likes</span>
+              <div className="flex justify-between py-1 border-b border-border">
+                <span className="text-muted-foreground">LIKES</span>
                 <span className="text-foreground">{image.likes.toLocaleString()}</span>
               </div>
             )}
 
             {image.downloads && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Downloads</span>
+              <div className="flex justify-between py-1 border-b border-border">
+                <span className="text-muted-foreground">DL</span>
                 <span className="text-foreground">{image.downloads.toLocaleString()}</span>
               </div>
             )}
 
             {image.views && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Views</span>
+              <div className="flex justify-between py-1 border-b border-border">
+                <span className="text-muted-foreground">VIEWS</span>
                 <span className="text-foreground">{image.views.toLocaleString()}</span>
               </div>
             )}
           </div>
         </div>
+      </div>
 
-        {/* Tags */}
-        {image.tags && image.tags.length > 0 && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium text-foreground">Tags</h3>
-            <div className="flex flex-wrap gap-2">
-              {image.tags.map((tag, index) => (
-                <span key={index} className="inline-flex items-center px-2 py-1 rounded-md bg-muted text-muted-foreground text-xs">
-                  <Tag className="w-3 h-3 mr-1" />
-                  {tag}
+      {/* Tags */}
+      {image.tags && image.tags.length > 0 && (
+        <div className="border-b border-border">
+          <div className="px-3 py-2 bg-muted/50 border-b border-border">
+            <h3 className="text-xs font-medium text-foreground uppercase tracking-wide">TAGS</h3>
+          </div>
+          <div className="p-3">
+            <div className="flex flex-wrap gap-1">
+              {image.tags.slice(0, 6).map((tag, index) => (
+                <span key={index} className="inline-flex items-center px-1.5 py-0.5 bg-muted text-muted-foreground border border-border">
+                  {tag.toUpperCase()}
                 </span>
               ))}
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* EXIF Data */}
-        {image.exif && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium text-foreground">Camera Info</h3>
-            <div className="space-y-2 text-sm">
+      {/* EXIF Data */}
+      {image.exif && (
+        <div className="border-b border-border">
+          <div className="px-3 py-2 bg-muted/50 border-b border-border">
+            <h3 className="text-xs font-medium text-foreground uppercase tracking-wide">EXIF</h3>
+          </div>
+          <div className="p-3">
+            <div className="space-y-1">
               {image.exif.make && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Make</span>
-                  <span className="text-foreground">{image.exif.make}</span>
+                <div className="flex justify-between py-1 border-b border-border">
+                  <span className="text-muted-foreground">MAKE</span>
+                  <span className="text-foreground truncate ml-2">{image.exif.make}</span>
                 </div>
               )}
 
               {image.exif.model && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Model</span>
-                  <span className="text-foreground">{image.exif.model}</span>
+                <div className="flex justify-between py-1 border-b border-border">
+                  <span className="text-muted-foreground">MODEL</span>
+                  <span className="text-foreground truncate ml-2">{image.exif.model}</span>
                 </div>
               )}
 
               {image.exif.focal_length && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Focal Length</span>
+                <div className="flex justify-between py-1 border-b border-border">
+                  <span className="text-muted-foreground">FOCAL</span>
                   <span className="text-foreground">{image.exif.focal_length}</span>
                 </div>
               )}
 
               {image.exif.aperture && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Aperture</span>
+                <div className="flex justify-between py-1 border-b border-border">
+                  <span className="text-muted-foreground">F-STOP</span>
                   <span className="text-foreground">f/{image.exif.aperture}</span>
                 </div>
               )}
 
               {image.exif.iso && (
-                <div className="flex justify-between">
+                <div className="flex justify-between py-1 border-b border-border">
                   <span className="text-muted-foreground">ISO</span>
                   <span className="text-foreground">{image.exif.iso}</span>
                 </div>
               )}
 
               {image.exif.exposure_time && (
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Exposure</span>
+                <div className="flex justify-between py-1 border-b border-border">
+                  <span className="text-muted-foreground">SHUTTER</span>
                   <span className="text-foreground">{image.exif.exposure_time}s</span>
                 </div>
               )}
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Location */}
-        {image.location && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium text-foreground">Location</h3>
-            <div className="text-sm text-muted-foreground">
-              {image.location.name && <div>{image.location.name}</div>}
+      {/* Location */}
+      {image.location && (
+        <div className="border-b border-border">
+          <div className="px-3 py-2 bg-muted/50 border-b border-border">
+            <h3 className="text-xs font-medium text-foreground uppercase tracking-wide">LOCATION</h3>
+          </div>
+          <div className="p-3">
+            <div className="text-muted-foreground">
+              {image.location.name && <div className="truncate">{image.location.name.toUpperCase()}</div>}
               {image.location.city && image.location.country && (
-                <div>
-                  {image.location.city}, {image.location.country}
+                <div className="truncate">
+                  {image.location.city.toUpperCase()}, {image.location.country.toUpperCase()}
                 </div>
               )}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -16,7 +16,7 @@ export function FavoriteHeart({ image }: FavoriteHeartProps) {
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const updatedFavorites = toggleImageFavorite(favorites, image);
     setFavorites(updatedFavorites);
   };
@@ -24,14 +24,12 @@ export function FavoriteHeart({ image }: FavoriteHeartProps) {
   return (
     <button
       onClick={handleToggleFavorite}
-      className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/20 backdrop-blur-sm hover:bg-black/40 transition-all duration-300 group-hover:scale-110 hover:scale-125"
+      className="absolute top-2 right-2 z-10 p-1.5 opacity-0 group-hover:opacity-100 transition-all duration-200"
       aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
     >
-      <Heart 
-        className={`w-5 h-5 transition-all duration-300 ${
-          isFavorited 
-            ? 'fill-red-500 text-red-500 scale-110' 
-            : 'text-white hover:text-red-400'
+      <Heart
+        className={`w-3 h-3 transition-all duration-200 ${
+          isFavorited ? 'fill-red-500 text-red-500' : 'text-muted-foreground hover:fill-red-500 hover:text-red-500'
         }`}
       />
     </button>

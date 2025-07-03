@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     url.searchParams.set('per_page', perPage.toString());
     url.searchParams.set('page', page.toString());
     url.searchParams.set('order_by', orderBy);
-    if (orientation) {
+    if (orientation && ['landscape', 'portrait', 'squarish'].includes(orientation)) {
       url.searchParams.set('orientation', orientation);
     }
 

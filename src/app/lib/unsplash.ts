@@ -2,8 +2,13 @@ import { UnsplashImage } from './types';
 
 const BASE_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
 
-async function fetchUnsplashImages(orientation: 'landscape' | 'portrait', perPage: number): Promise<UnsplashImage[]> {
-  const response = await fetch(`${BASE_URL}/api/images?per_page=${perPage}&order_by=popular&orientation=${orientation}`, {
+async function fetchUnsplashImages(orientation?: 'landscape' | 'portrait' | 'squarish', perPage: number = 10): Promise<UnsplashImage[]> {
+  let url = `${BASE_URL}/api/images?per_page=${perPage}&order_by=popular`;
+  if (orientation) {
+    url += `&orientation=${orientation}`;
+  }
+
+  const response = await fetch(url, {
     next: { revalidate: 3600 },
   });
 
@@ -19,16 +24,8 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 export async function getImages(count: number): Promise<UnsplashImage[]> {
-  const landscapeCount = Math.ceil(count / 2);
-  const portraitCount = Math.floor(count / 2);
-
-  const [landscapeImages, portraitImages] = await Promise.all([
-    fetchUnsplashImages('landscape', landscapeCount),
-    fetchUnsplashImages('portrait', portraitCount),
-  ]);
-
-  const allImages = [...landscapeImages, ...portraitImages];
-  const shuffledImages = shuffleArray(allImages);
-
-  return shuffledImages.slice(0, count);
+  // Simplified: just fetch popular images without orientation filtering
+  // This creates a consistent pagination sequence that can be continued in the client
+  const images = await fetchUnsplashImages(undefined, count);
+  return images;
 }

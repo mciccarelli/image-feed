@@ -21,16 +21,10 @@ export function FavoriteButton({ image }: FavoriteButtonProps) {
   return (
     <button
       onClick={handleToggleFavorite}
-      className="flex items-center space-x-2 px-3 py-2 rounded-md bg-muted hover:bg-accent hover:text-accent-foreground transition-colors text-sm"
+      className="flex items-center justify-center p-1.5 hover:bg-accent hover:text-accent-foreground transition-colors border border-border"
+      title={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
     >
-      <Heart 
-        className={`w-4 h-4 transition-colors ${
-          isFavorited 
-            ? 'fill-red-500 text-red-500' 
-            : 'text-current'
-        }`}
-      />
-      <span>{isFavorited ? 'Saved' : 'Save'}</span>
+      <Heart className={`w-3 h-3 transition-colors ${isFavorited ? 'fill-red-500 text-red-500' : 'text-current'}`} />
     </button>
   );
 }

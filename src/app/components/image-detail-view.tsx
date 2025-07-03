@@ -11,19 +11,18 @@ interface ImageDetailViewProps {
 
 export function ImageDetailView({ image }: ImageDetailViewProps) {
   return (
-    <div className="min-h-[calc(100dvh-82px)] bg-background">
+    <div className="md:h-[calc(100dvh-40px)] md:overflow-hidden bg-background">
       {/* Secondary toolbar with image details */}
       <ImageDetailToolbar image={image} />
 
       {/* Main content area */}
-      <div className="flex h-[calc(100dvh-41px)] mt-[41px]">
-        {/* 80px = navbar (40px) + toolbar (40px) */}
-        {/* Left column - Large image */}
-        <div className="flex-1 min-w-0 w-full max-w-[calc(100dvw-384px)] md:h-[calc(100dvh-81px)] overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-12">
+        {/* Image content */}
+        <div className="md:col-span-9 min-w-0 w-full md:h-calc(100dvh-40px) overflow-hidden">
           <ImageDetailContent image={image} />
         </div>
-        {/* Right sidebar - Actions */}
-        <div className="w-96 border-l border-border bg-background fixed top-[81px] right-0 h-[calc(100dvh-81px)] overflow-y-auto">
+        {/* Sidebar - below image on mobile, right side on desktop */}
+        <div className="md:col-span-3 border-t md:border-t-0 md:border-l border-border bg-background md:h-dvh md:overflow-y-auto md:h-[calc(100dvh-40px)]">
           <ImageDetailSidebar image={image} />
         </div>
       </div>

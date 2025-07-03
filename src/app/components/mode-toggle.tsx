@@ -1,65 +1,52 @@
 'use client';
 
 import * as React from 'react';
-import { Moon, Sun, Monitor } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
-
-import { RadioGroup, RadioGroupItem } from '@/app/components/ui/radio-group';
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
+  const [visualDark, setVisualDark] = React.useState(false);
 
-  // useEffect only runs on the client, so now we can safely show the UI
   React.useEffect(() => {
     setMounted(true);
   }, []);
+
+  React.useEffect(() => {
+    if (mounted && theme) {
+      setVisualDark(theme === 'dark');
+    }
+  }, [theme, mounted]);
 
   if (!mounted) {
     return null;
   }
 
+  const toggleTheme = () => {
+    const newIsDark = !visualDark;
+    setVisualDark(newIsDark); // Update visual state immediately
+    setTheme(newIsDark ? 'dark' : 'light'); // Update actual theme
+  };
+
   return (
-    <div className="flex items-center justify-between">
-      <span className="text-sm font-medium">Theme</span>
-      
-      <div className="flex items-center space-x-1">
-        <button
-          onClick={() => setTheme('light')}
-          className={`p-2 rounded-md transition-colors ${
-            theme === 'light' 
-              ? 'bg-accent text-accent-foreground' 
-              : 'hover:bg-accent hover:text-accent-foreground'
-          }`}
-          aria-label="Light mode"
-        >
-          <Sun className="h-4 w-4" />
-        </button>
-        
-        <button
-          onClick={() => setTheme('dark')}
-          className={`p-2 rounded-md transition-colors ${
-            theme === 'dark' 
-              ? 'bg-accent text-accent-foreground' 
-              : 'hover:bg-accent hover:text-accent-foreground'
-          }`}
-          aria-label="Dark mode"
-        >
-          <Moon className="h-4 w-4" />
-        </button>
-        
-        <button
-          onClick={() => setTheme('system')}
-          className={`p-2 rounded-md transition-colors ${
-            theme === 'system' 
-              ? 'bg-accent text-accent-foreground' 
-              : 'hover:bg-accent hover:text-accent-foreground'
-          }`}
-          aria-label="System mode"
-        >
-          <Monitor className="h-4 w-4" />
-        </button>
-      </div>
-    </div>
+    <button
+      onClick={toggleTheme}
+      className="relative inline-flex h-7.5 w-14 items-center rounded-full bg-muted border border-border transition-all duration-300 ease-in-out hover:bg-accent"
+      aria-label={`Switch to ${visualDark ? 'light' : 'dark'} mode`}
+    >
+      <span
+        className="absolute h-6 w-6 transform rounded-full bg-background border border-border transition-transform duration-300 ease-in-out"
+        style={{
+          transform: visualDark ? 'translateX(1.75rem)' : 'translateX(0.125rem)',
+        }}
+      />
+
+      {/* Light mode icon */}
+      <Sun className={`absolute left-2 h-3 w-3 transition-opacity ${visualDark ? 'opacity-40' : 'opacity-100'}`} />
+
+      {/* Dark mode icon */}
+      <Moon className={`absolute right-2 h-3 w-3 transition-opacity ${visualDark ? 'opacity-100' : 'opacity-40'}`} />
+    </button>
   );
 }

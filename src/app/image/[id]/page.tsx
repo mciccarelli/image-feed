@@ -24,13 +24,14 @@ async function fetchImageById(id: string): Promise<UnsplashImage | null> {
 }
 
 interface ImagePageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function ImagePage({ params }: ImagePageProps) {
-  const image = await fetchImageById(params.id);
+  const { id } = await params;
+  const image = await fetchImageById(id);
 
   if (!image) {
     notFound();
@@ -40,7 +41,8 @@ export default async function ImagePage({ params }: ImagePageProps) {
 }
 
 export async function generateMetadata({ params }: ImagePageProps) {
-  const image = await fetchImageById(params.id);
+  const { id } = await params;
+  const image = await fetchImageById(id);
 
   if (!image) {
     return {

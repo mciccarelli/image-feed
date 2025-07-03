@@ -1,48 +1,36 @@
 import { NextResponse } from 'next/server';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const accessKey = process.env.UNSPLASH_ACCESS_KEY;
-    
+
     if (!accessKey) {
-      return NextResponse.json(
-        { error: 'Unsplash access key not configured' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Unsplash access key not configured' }, { status: 500 });
     }
 
-    const { id } = params;
-    
+    const { id } = await params;
+
     if (!id) {
-      return NextResponse.json(
-        { error: 'Image ID is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Image ID is required' }, { status: 400 });
     }
 
     const url = `https://api.unsplash.com/photos/${id}`;
-    
+
     const response = await fetch(url, {
       headers: {
-        'Authorization': `Client-ID ${accessKey}`,
+        Authorization: `Client-ID ${accessKey}`,
       },
     });
 
     if (!response.ok) {
       if (response.status === 404) {
-        return NextResponse.json(
-          { error: 'Image not found' },
-          { status: 404 }
-        );
+        return NextResponse.json({ error: 'Image not found' }, { status: 404 });
       }
       throw new Error(`Unsplash API error: ${response.status}`);
     }
 
     const imageData = await response.json();
-    
+
     // Transform the response to match our UnsplashImage interface
     const transformedImage = {
       id: imageData.id,
@@ -77,9 +65,6 @@ export async function GET(
     return NextResponse.json(transformedImage);
   } catch (error) {
     console.error('Error fetching image:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch image' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch image' }, { status: 500 });
   }
 }
