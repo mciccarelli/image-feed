@@ -13,7 +13,6 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const count = parseInt(searchParams.get('count') || '20', 10);
-    const orientation = searchParams.get('orientation') || 'all';
 
     // Fetch a mix of landscape and portrait images
     const [landscapeResponse, portraitResponse] = await Promise.all([

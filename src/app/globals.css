@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -19,16 +19,16 @@
   }
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --background: #0a0a0a;
   --foreground: #ededed;
 }
 
-[data-theme="light"] {
+[data-theme='light'] {
   --background: #ffffff;
   --foreground: #171717;
 }
 
 body {
-  @apply font-sans bg-background text-foreground;
+  @apply font-sans;
 }
