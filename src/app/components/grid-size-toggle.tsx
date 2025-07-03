@@ -16,10 +16,10 @@ export function GridSizeToggle() {
     return null;
   }
 
-  const isLarge = gridSize === 'xl';
+  const isLarge = gridSize === 'large';
 
   const toggleGrid = () => {
-    setGridSize(isLarge ? 'medium' : 'xl');
+    setGridSize(isLarge ? 'medium' : 'large');
   };
 
   return (

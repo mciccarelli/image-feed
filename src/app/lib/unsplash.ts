@@ -26,7 +26,15 @@ async function fetchUnsplashImages(orientation?: 'landscape' | 'portrait' | 'squ
     throw new Error('Failed to fetch images from Unsplash');
   }
 
-  return response.json();
+  const images = await response.json();
+  
+  // Transform images to include blur_hash
+  const transformedImages = images.map((img: any) => ({
+    ...img,
+    blur_hash: img.blur_hash || null,
+  }));
+  
+  return transformedImages;
 }
 
 function shuffleArray<T>(array: T[]): T[] {

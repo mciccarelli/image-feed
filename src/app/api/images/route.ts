@@ -33,7 +33,14 @@ export async function GET(request: Request) {
     }
 
     const images = await response.json();
-    return NextResponse.json(images);
+    
+    // Transform images to include blur_hash
+    const transformedImages = images.map((img: any) => ({
+      ...img,
+      blur_hash: img.blur_hash || null,
+    }));
+    
+    return NextResponse.json(transformedImages);
   } catch (error) {
     console.error('Error fetching images:', error);
     return NextResponse.json({ error: 'Failed to fetch images' }, { status: 500 });

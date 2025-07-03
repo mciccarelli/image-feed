@@ -1,4 +1,5 @@
 export { AnimatedImageCount } from './animated-image-count';
+export { EnhancedImage } from './enhanced-image';
 export { FavoriteButton } from './favorite-button';
 export { FavoriteHeart } from './favorite-heart';
 export { GridSizeToggle } from './grid-size-toggle';

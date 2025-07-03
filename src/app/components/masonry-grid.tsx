@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { useAtomValue } from 'jotai';
-import Image from 'next/image';
 import Link from 'next/link';
 import { UnsplashImage } from '@/app/lib/types';
 import { FavoriteHeart } from './favorite-heart';
+import { EnhancedImage } from './enhanced-image';
 import { gridSizeAtom, getGridClasses } from '@/app/state/grid';
 import { deduplicateImages, addUniqueImages } from '@/app/state/images';
 
@@ -76,10 +76,9 @@ const MasonryGrid = ({ images, keyPrefix = 'masonry-' }: MasonryGridProps) => {
             }}
           >
             <Link href={`/image/${image.id}`} className="block relative w-full h-full">
-              <Image
+              <EnhancedImage
+                image={image}
                 priority
-                src={image.urls.regular}
-                alt={image.alt_description || 'Unsplash image'}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
@@ -146,13 +145,22 @@ const MasonryGridWithLoadMore = ({ initialImages }: MasonryGridWithLoadMoreProps
       {loading && (
         <div className={`${gridClasses} gap-2 md:gap-6 space-y-2 md:space-y-6 mt-4`}>
           {Array.from({ length: 12 }).map((_, index) => (
-            <div
+            <motion.div
               key={`skeleton-${index}`}
-              className="break-inside-avoid mb-2 md:mb-6 bg-card border border-border animate-pulse"
+              className="break-inside-avoid mb-2 md:mb-6 bg-card border border-border animate-pulse overflow-hidden"
               style={{ height: 200 + (index % 4) * 50 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.3,
+                delay: index * 0.05,
+                ease: 'easeOut',
+              }}
             >
-              <div className="w-full h-full bg-muted" />
-            </div>
+              <div className="w-full h-full bg-muted/50 relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-muted/30 to-transparent animate-pulse" />
+              </div>
+            </motion.div>
           ))}
         </div>
       )}

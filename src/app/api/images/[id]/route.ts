@@ -42,6 +42,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
       },
       alt_description: imageData.alt_description || '',
       description: imageData.description || '',
+      blur_hash: imageData.blur_hash || null,
       user: {
         name: imageData.user.name,
         username: imageData.user.username,

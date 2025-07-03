@@ -8,6 +8,7 @@ export interface UnsplashImage {
   };
   alt_description: string;
   description?: string;
+  blur_hash?: string;
   user: {
     name: string;
     username?: string;

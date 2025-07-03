@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useAtomValue } from 'jotai';
 import { UnsplashImage } from '@/app/lib/types';
 import { FavoriteHeart } from './favorite-heart';
+import { EnhancedImage } from './enhanced-image';
 import { gridSizeAtom, getGridClasses } from '@/app/state/grid';
 
 interface ListImagesProps {
@@ -58,18 +58,17 @@ export function ListImages({ images, keyPrefix = '' }: ListImagesProps) {
           <div
             key={`${keyPrefix}${image.id}-${idx}`}
             data-image-id={image.id}
-            className="break-inside-avoid mb-3 md:mb-6 overflow-hidden bg-card border border-border group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 rounded-lg"
+            className="break-inside-avoid mb-3 md:mb-6 overflow-hidden bg-card border border-border group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300"
             style={{ height: displayHeight }}
           >
             <Link href={`/image/${image.id}`} className="block relative w-full h-full">
-              <Image
-                src={image.urls.regular}
-                alt={image.alt_description || 'Unsplash image'}
+              <EnhancedImage
+                image={image}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 " />
               <FavoriteHeart image={image} />
             </Link>
           </div>

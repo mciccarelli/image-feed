@@ -12,13 +12,22 @@ interface SavedImagesProps {
 export function SavedImages({ images }: SavedImagesProps) {
   if (images.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <Heart className="w-16 h-16 text-muted-foreground mb-4" />
-        <h2 className="text-2xl font-semibold text-foreground mb-2">No saved images yet</h2>
-        <p className="text-muted-foreground mb-6 max-w-md">Start exploring images and click the heart icon to save your favorites here.</p>
-        <Link href="/" className="px-6 py-3 bg-secondary hover:bg-accent text-secondary-foreground hover:text-accent-foreground rounded-lg font-medium transition-colors">
-          Explore Images
-        </Link>
+      <div className="flex flex-col items-center justify-center py-12 text-center">
+        <div className="border border-border bg-card p-6 max-w-sm">
+          <div className="flex items-center gap-2 mb-3">
+            <Heart className="w-4 h-4 text-muted-foreground" />
+            <span className="font-mono text-sm text-muted-foreground">~/favorites</span>
+          </div>
+          <h2 className="font-mono text-lg font-medium text-foreground mb-2">empty directory</h2>
+          <p className="font-mono text-sm text-muted-foreground mb-4">no images saved yet</p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background hover:bg-foreground/90 rounded border font-mono text-sm font-medium transition-colors"
+          >
+            <span>$</span>
+            <span>explore</span>
+          </Link>
+        </div>
       </div>
     );
   }
