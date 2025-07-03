@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import { useAtom } from 'jotai'
-import { themeAtom } from '../theme'
+import { useAtom } from 'jotai';
+import { themeAtom } from '../theme';
 
-export function ThemeToggle() {
-  const [theme, setTheme] = useAtom(themeAtom)
+export default function ThemeToggle() {
+  const [theme, setTheme] = useAtom(themeAtom);
 
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light')
-  }
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   return (
     <button
@@ -22,5 +22,5 @@ export function ThemeToggle() {
         }`}
       />
     </button>
-  )
+  );
 }

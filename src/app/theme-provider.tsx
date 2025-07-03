@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { useAtom } from 'jotai'
-import { useEffect } from 'react'
-import { themeAtom } from './theme'
+import { useAtom } from 'jotai';
+import { useEffect } from 'react';
+import { themeAtom } from './theme';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme] = useAtom(themeAtom)
+  const [theme] = useAtom(themeAtom);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-  }, [theme])
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
-  return <>{children}</>
+  return <>{children}</>;
 }
