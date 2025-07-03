@@ -5,59 +5,35 @@ export async function GET(request: Request) {
     const accessKey = process.env.UNSPLASH_ACCESS_KEY;
 
     if (!accessKey) {
-      return NextResponse.json(
-        { error: 'Unsplash API key not configured' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Unsplash API key not configured' }, { status: 500 });
     }
 
     const { searchParams } = new URL(request.url);
-    const count = parseInt(searchParams.get('count') || '20', 10);
+    const perPage = parseInt(searchParams.get('per_page') || '20', 10);
+    const orderBy = searchParams.get('order_by') || 'popular';
+    const orientation = searchParams.get('orientation') || undefined;
 
-    // Fetch a mix of landscape and portrait images
-    const [landscapeResponse, portraitResponse] = await Promise.all([
-      fetch(
-        `https://api.unsplash.com/photos?per_page=${Math.ceil(
-          count / 2
-        )}&order_by=popular&orientation=landscape`,
-        {
-          headers: {
-            Authorization: `Client-ID ${accessKey}`,
-          },
-        }
-      ),
-      fetch(
-        `https://api.unsplash.com/photos?per_page=${Math.floor(
-          count / 2
-        )}&order_by=popular&orientation=portrait`,
-        {
-          headers: {
-            Authorization: `Client-ID ${accessKey}`,
-          },
-        }
-      ),
-    ]);
+    const url = new URL('https://api.unsplash.com/photos');
+    url.searchParams.set('per_page', perPage.toString());
+    url.searchParams.set('order_by', orderBy);
+    if (orientation) {
+      url.searchParams.set('orientation', orientation);
+    }
 
-    if (!landscapeResponse.ok || !portraitResponse.ok) {
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Client-ID ${accessKey}`,
+      },
+    });
+
+    if (!response.ok) {
       throw new Error('Failed to fetch images from Unsplash');
     }
 
-    const [landscapeImages, portraitImages] = await Promise.all([
-      landscapeResponse.json(),
-      portraitResponse.json(),
-    ]);
-
-    // Shuffle and combine the images
-    const allImages = [...landscapeImages, ...portraitImages]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, count);
-
-    return NextResponse.json(allImages);
+    const images = await response.json();
+    return NextResponse.json(images);
   } catch (error) {
     console.error('Error fetching images:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch images' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch images' }, { status: 500 });
   }
 }

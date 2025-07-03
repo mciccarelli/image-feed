@@ -2,7 +2,7 @@
 
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
-import { themeAtom } from './theme';
+import { themeAtom } from './state';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme] = useAtom(themeAtom);

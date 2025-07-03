@@ -1,2 +1,2 @@
 export { default as ImagesFeed } from './images-feed';
-export { ModeToggle as ThemeToggle } from '@/components/mode-toggle';
+export { default as ThemeToggle } from './theme-toggle';

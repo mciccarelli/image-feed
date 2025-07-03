@@ -6,13 +6,9 @@ export function Navbar() {
       <div className="mx-auto px-4 h-12 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-black dark:bg-white rounded flex items-center justify-center">
-            <span className="text-white dark:text-black font-bold text-xs">
-              IF
-            </span>
+            <span className="text-white dark:text-black font-bold text-xs">IF</span>
           </div>
-          <span className="font-medium text-sm text-black dark:text-white">
-            ImageFeed
-          </span>
+          <span className="font-medium text-sm text-black dark:text-white">ImageFeed</span>
         </div>
 
         <ModeToggle />

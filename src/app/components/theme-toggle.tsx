@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtom } from 'jotai';
-import { themeAtom } from '../theme';
+import { themeAtom } from '@/app/state';
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useAtom(themeAtom);
