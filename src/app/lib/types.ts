@@ -7,6 +7,9 @@ export interface UnsplashImage {
   alt_description: string;
   user: {
     name: string;
+    links?: {
+      html?: string;
+    };
   };
   width: number;
   height: number;
