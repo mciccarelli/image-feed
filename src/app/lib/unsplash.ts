@@ -1,19 +1,29 @@
 import { UnsplashImage } from './types';
 
-const BASE_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
-
 async function fetchUnsplashImages(orientation?: 'landscape' | 'portrait' | 'squarish', perPage: number = 10): Promise<UnsplashImage[]> {
-  let url = `${BASE_URL}/api/images?per_page=${perPage}&order_by=popular`;
-  if (orientation) {
-    url += `&orientation=${orientation}`;
+  const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+
+  if (!accessKey) {
+    throw new Error('Unsplash API key not configured');
   }
 
-  const response = await fetch(url, {
+  const url = new URL('https://api.unsplash.com/photos');
+  url.searchParams.set('per_page', perPage.toString());
+  url.searchParams.set('page', '1');
+  url.searchParams.set('order_by', 'popular');
+  if (orientation && ['landscape', 'portrait', 'squarish'].includes(orientation)) {
+    url.searchParams.set('orientation', orientation);
+  }
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      Authorization: `Client-ID ${accessKey}`,
+    },
     next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch images');
+    throw new Error('Failed to fetch images from Unsplash');
   }
 
   return response.json();
