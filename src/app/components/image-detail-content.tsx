@@ -8,9 +8,15 @@ interface ImageDetailContentProps {
 }
 
 export function ImageDetailContent({ image }: ImageDetailContentProps) {
+  // Determine if image is landscape or portrait
+  const isLandscape = image.width > image.height;
+
+  // Use 16/9 for landscape, 2/3 for portrait
+  const aspectRatioClass = isLandscape ? 'aspect-video max-w-4xl' : 'aspect-[2/3] max-w-3xl';
+
   return (
     <div className="h-[50vh] md:h-full flex items-center justify-center p-4 md:p-20 bg-muted/30">
-      <div className="relative w-full h-full max-w-4xl">
+      <div className={`relative w-full ${aspectRatioClass}`}>
         <EnhancedImage
           image={image}
           useHD={true}

@@ -1,6 +1,6 @@
 import { UnsplashImage } from './types';
 
-async function fetchUnsplashImages(orientation?: 'landscape' | 'portrait' | 'squarish', perPage: number = 10): Promise<UnsplashImage[]> {
+export async function fetchUnsplashImages(page: number = 1, perPage: number = 12): Promise<UnsplashImage[]> {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY;
 
   if (!accessKey) {
@@ -8,12 +8,11 @@ async function fetchUnsplashImages(orientation?: 'landscape' | 'portrait' | 'squ
   }
 
   const url = new URL('https://api.unsplash.com/photos');
-  url.searchParams.set('per_page', perPage.toString());
-  url.searchParams.set('page', '1');
+  url.searchParams.set('page', page.toString());
+  url.searchParams.set('per_page', perPage?.toString());
   url.searchParams.set('order_by', 'popular');
-  if (orientation && ['landscape', 'portrait', 'squarish'].includes(orientation)) {
-    url.searchParams.set('orientation', orientation);
-  }
+
+  console.log('Unsplash API URL:', url.toString());
 
   const response = await fetch(url.toString(), {
     headers: {
@@ -26,24 +25,5 @@ async function fetchUnsplashImages(orientation?: 'landscape' | 'portrait' | 'squ
     throw new Error('Failed to fetch images from Unsplash');
   }
 
-  const images = await response.json();
-  
-  // Transform images to include blur_hash
-  const transformedImages = images.map((img: any) => ({
-    ...img,
-    blur_hash: img.blur_hash || null,
-  }));
-  
-  return transformedImages;
-}
-
-function shuffleArray<T>(array: T[]): T[] {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-export async function getImages(count: number): Promise<UnsplashImage[]> {
-  // Simplified: just fetch popular images without orientation filtering
-  // This creates a consistent pagination sequence that can be continued in the client
-  const images = await fetchUnsplashImages(undefined, count);
-  return images;
+  return await response.json();
 }

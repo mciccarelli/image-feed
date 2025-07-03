@@ -1,15 +1,14 @@
 'use client';
 
+import { useAtomValue } from 'jotai';
 import Link from 'next/link';
-import { UnsplashImage } from '@/app/lib/types';
-import { ListImages } from './list-images';
+import { ImageGrid } from './image-grid';
 import { Heart } from 'lucide-react';
+import { favoriteImagesAtom } from '@/app/state/favorites';
 
-interface SavedImagesProps {
-  images: UnsplashImage[];
-}
+export function SavedImages() {
+  const images = useAtomValue(favoriteImagesAtom);
 
-export function SavedImages({ images }: SavedImagesProps) {
   if (images.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -32,5 +31,5 @@ export function SavedImages({ images }: SavedImagesProps) {
     );
   }
 
-  return <ListImages images={images} keyPrefix="saved-" />;
+  return <ImageGrid images={images} keyPrefix="saved-" />;
 }

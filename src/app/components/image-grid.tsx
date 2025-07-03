@@ -6,66 +6,56 @@ import Link from 'next/link';
 import { UnsplashImage } from '@/app/lib/types';
 import { FavoriteHeart } from './favorite-heart';
 import { EnhancedImage } from './enhanced-image';
-import { gridSizeAtom, getGridClasses } from '@/app/state/grid';
+import { gridSizeAtom } from '@/app/state/grid';
 import { allImagesAtom, addImagesAtom, initializeImagesAtom } from '@/app/state/images';
 
-interface MasonryGridProps {
+interface ImageGridProps {
   images: UnsplashImage[];
   keyPrefix?: string;
 }
 
-const MasonryGrid = ({ images, keyPrefix = 'masonry-' }: MasonryGridProps) => {
+const ImageGrid = ({ images, keyPrefix = 'grid-' }: ImageGridProps) => {
   const gridSize = useAtomValue(gridSizeAtom);
-  const gridClasses = getGridClasses(gridSize);
+  const gridClasses = gridSize === 'medium' ? 'columns-1 sm:columns-2 md:columns-3' : 'columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5';
 
   return (
-    <div className={`${gridClasses} gap-2 md:gap-6 space-y-2 md:space-y-6`}>
-      {images.map((image, idx) => {
-        // Simple aspect ratio based sizing
-        const aspectRatio = image.height / image.width;
-        const baseWidth = 300;
-        const naturalHeight = Math.round(baseWidth * aspectRatio);
-        
-        // Constrain height to reasonable bounds
-        const displayHeight = Math.max(200, Math.min(500, naturalHeight));
-
-        return (
-          <div
-            key={`${keyPrefix}${image.id}-${idx}`}
-            data-image-id={image.id}
-            className="break-inside-avoid mb-2 md:mb-6 overflow-hidden bg-card border border-border"
-            style={{ height: displayHeight }}
-          >
-            <Link href={`/image/${image.id}`} className="block relative w-full h-full">
-              <EnhancedImage
-                image={image}
-                priority={idx < 6}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
-              />
-              <FavoriteHeart image={image} />
-            </Link>
+    <div className={`${gridClasses} gap-4 space-y-4`}>
+      {images.map((image, idx) => (
+        <div
+          key={`${keyPrefix}${image.id}-${idx}`}
+          data-image-id={image.id}
+          className="break-inside-avoid mb-4 overflow-hidden bg-card border border-border group relative"
+        >
+          <Link href={`/image/${image.id}`} className="block relative w-full">
+            <EnhancedImage
+              image={image}
+              priority={idx < 6}
+              className="object-cover w-full h-auto"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+            />
+          </Link>
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <FavoriteHeart image={image} />
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 };
 
-interface MasonryGridWithLoadMoreProps {
+interface ImageGridWithLoadMoreProps {
   initialImages: UnsplashImage[];
 }
 
-const MasonryGridWithLoadMore = ({ initialImages }: MasonryGridWithLoadMoreProps) => {
+const ImageGridWithLoadMore = ({ initialImages }: ImageGridWithLoadMoreProps) => {
   const images = useAtomValue(allImagesAtom);
   const addImages = useSetAtom(addImagesAtom);
   const initializeImages = useSetAtom(initializeImagesAtom);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(2); // Start from page 2 since initial is page 1
+  const [page, setPage] = useState(3); // Start from page 3
   const gridSize = useAtomValue(gridSizeAtom);
-  const gridClasses = getGridClasses(gridSize);
-  const perPage = initialImages?.length || 24;
+  const gridClasses = gridSize === 'medium' ? 'columns-1 sm:columns-2 md:columns-3' : 'columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5';
+  const perPage = 12;
 
   // Initialize images on mount ONLY ONCE
   useEffect(() => {
@@ -77,8 +67,6 @@ const MasonryGridWithLoadMore = ({ initialImages }: MasonryGridWithLoadMoreProps
   const loadMore = async () => {
     setLoading(true);
     try {
-      // Simplified: just fetch the next page of popular images without orientation filtering
-      // This ensures consistent pagination and eliminates most duplicate possibilities
       const response = await fetch(`/api/images?per_page=${perPage}&page=${page}&order_by=popular`);
 
       if (!response.ok) {
@@ -101,19 +89,17 @@ const MasonryGridWithLoadMore = ({ initialImages }: MasonryGridWithLoadMoreProps
 
   return (
     <div>
-      <MasonryGrid images={images} keyPrefix="main-" />
+      <ImageGrid images={images} keyPrefix="main-" />
 
       {loading && (
-        <div className={`${gridClasses} gap-2 md:gap-6 space-y-2 md:space-y-6 mt-4`}>
+        <div className={`${gridClasses} gap-4 space-y-4 mt-4`}>
           {Array.from({ length: 12 }).map((_, index) => (
             <div
               key={`skeleton-${index}`}
-              className="break-inside-avoid mb-2 md:mb-6 bg-card border border-border animate-pulse overflow-hidden"
+              className="break-inside-avoid mb-4 bg-card border border-border animate-pulse overflow-hidden"
               style={{ height: 200 + (index % 4) * 50 }}
             >
-              <div className="w-full h-full bg-muted/50 relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-muted/30 to-transparent animate-pulse" />
-              </div>
+              <div className="w-full h-full bg-muted/50" />
             </div>
           ))}
         </div>
@@ -132,5 +118,5 @@ const MasonryGridWithLoadMore = ({ initialImages }: MasonryGridWithLoadMoreProps
   );
 };
 
-export { MasonryGrid, MasonryGridWithLoadMore };
-export default MasonryGridWithLoadMore;
+export { ImageGrid, ImageGridWithLoadMore };
+export default ImageGridWithLoadMore;

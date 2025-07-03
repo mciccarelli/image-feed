@@ -7,7 +7,7 @@ import { UnsplashImage } from '@/app/lib/types';
 
 interface EnhancedImageProps {
   image: UnsplashImage;
-  useHD?: boolean; // Use high-definition image if available
+  useHD?: boolean;
   priority?: boolean;
   className?: string;
   fill?: boolean;
@@ -24,16 +24,14 @@ export function EnhancedImage({ image, useHD, priority = false, className = '', 
 
   return (
     <div className="relative w-full h-full">
-      {/* Loading skeleton */}
-      {!isLoaded && (
-        <Skeleton className="absolute inset-0 w-full h-full rounded-none" />
-      )}
-      
-      {/* Actual image */}
+      {!isLoaded && <Skeleton className="absolute inset-0 w-full h-full rounded-none" />}
+
       <Image
         priority={priority}
         src={useHD && image?.urls?.full ? image.urls.full : image?.urls?.regular}
         alt={alt || image.alt_description || 'Unsplash image'}
+        width={fill ? undefined : image.width}
+        height={fill ? undefined : image.height}
         fill={fill}
         sizes={sizes}
         className={className}
@@ -41,7 +39,7 @@ export function EnhancedImage({ image, useHD, priority = false, className = '', 
         style={{
           objectFit: 'cover',
           width: '100%',
-          height: '100%',
+          height: fill ? '100%' : 'auto',
         }}
       />
     </div>

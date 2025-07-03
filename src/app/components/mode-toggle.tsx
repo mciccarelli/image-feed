@@ -25,8 +25,8 @@ export function ModeToggle() {
 
   const toggleTheme = () => {
     const newIsDark = !visualDark;
-    setVisualDark(newIsDark); // Update visual state immediately
-    setTheme(newIsDark ? 'dark' : 'light'); // Update actual theme
+    setVisualDark(newIsDark);
+    setTheme(newIsDark ? 'dark' : 'light');
   };
 
   return (
@@ -41,11 +41,7 @@ export function ModeToggle() {
           transform: visualDark ? 'translateX(1.75rem)' : 'translateX(0.125rem)',
         }}
       />
-
-      {/* Light mode icon */}
       <Sun className={`absolute left-2 h-3 w-3 transition-opacity ${visualDark ? 'opacity-40' : 'opacity-100'}`} />
-
-      {/* Dark mode icon */}
       <Moon className={`absolute right-2 h-3 w-3 transition-opacity ${visualDark ? 'opacity-100' : 'opacity-40'}`} />
     </button>
   );

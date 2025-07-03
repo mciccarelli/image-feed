@@ -2,16 +2,23 @@
 
 import { useAtomValue } from 'jotai';
 import { allImagesAtom } from '@/app/state/images';
+import { favoriteImagesAtom } from '@/app/state/favorites';
 import { AnimatedImageCount } from './animated-image-count';
+import { usePathname } from 'next/navigation';
 
 interface PageHeaderProps {
   title: string;
-  subtitle?: string;
   showImageCount?: boolean;
 }
 
-export function PageHeader({ title, subtitle, showImageCount = false }: PageHeaderProps) {
-  const images = useAtomValue(allImagesAtom);
+export function PageHeader({ title, showImageCount = false }: PageHeaderProps) {
+  const allImages = useAtomValue(allImagesAtom);
+  const savedImages = useAtomValue(favoriteImagesAtom);
+
+  const pathname = usePathname();
+  const isSavedPage = pathname.startsWith('/saved');
+
+  const text = isSavedPage ? `${savedImages.length} ${savedImages.length === 1 ? 'image' : 'images'} saved` : '';
 
   return (
     <div className="md:fixed md:top-0 left-0 md:left-48 h-10 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -23,8 +30,8 @@ export function PageHeader({ title, subtitle, showImageCount = false }: PageHead
         </div>
 
         <div className="flex items-center space-x-4 text-xs text-muted-foreground font-mono">
-          {showImageCount && images.length > 0 && <AnimatedImageCount count={images.length} />}
-          {subtitle && <span className="truncate">{subtitle}</span>}
+          {showImageCount && allImages.length > 0 && <AnimatedImageCount count={allImages.length} />}
+          {text && <span className="truncate">{text}</span>}
         </div>
       </div>
     </div>
