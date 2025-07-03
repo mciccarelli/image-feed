@@ -10,11 +10,13 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const perPage = parseInt(searchParams.get('per_page') || '20', 10);
+    const page = parseInt(searchParams.get('page') || '1', 10);
     const orderBy = searchParams.get('order_by') || 'popular';
     const orientation = searchParams.get('orientation') || undefined;
 
     const url = new URL('https://api.unsplash.com/photos');
     url.searchParams.set('per_page', perPage.toString());
+    url.searchParams.set('page', page.toString());
     url.searchParams.set('order_by', orderBy);
     if (orientation) {
       url.searchParams.set('orientation', orientation);
