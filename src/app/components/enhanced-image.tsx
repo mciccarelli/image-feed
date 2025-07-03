@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { getBlurDataURL } from '@/app/lib/blur';
+import { Skeleton } from '@/app/components/ui/skeleton';
 import { UnsplashImage } from '@/app/lib/types';
 
 interface EnhancedImageProps {
@@ -18,8 +18,6 @@ interface EnhancedImageProps {
 export function EnhancedImage({ image, useHD, priority = false, className = '', fill = false, sizes, alt }: EnhancedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
-  
-  const blurDataURL = getBlurDataURL(image.blur_hash);
 
   const handleLoad = () => {
     setIsLoaded(true);
@@ -43,17 +41,21 @@ export function EnhancedImage({ image, useHD, priority = false, className = '', 
 
   return (
     <div className="relative w-full h-full">
+      {/* Loading skeleton */}
+      {!isLoaded && (
+        <Skeleton className="absolute inset-0 w-full h-full rounded-none" />
+      )}
+      
+      {/* Actual image */}
       <Image
         priority={priority}
         src={useHD && image?.urls?.full ? image.urls.full : image?.urls?.regular}
         alt={alt || image.alt_description || 'Unsplash image'}
         fill={fill}
         sizes={sizes}
-        className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+        className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500 ease-in-out`}
         onLoad={handleLoad}
         onError={handleError}
-        placeholder="blur"
-        blurDataURL={blurDataURL}
         style={{
           objectFit: 'cover',
           width: '100%',

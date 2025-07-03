@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import Link from 'next/link';
 import { UnsplashImage } from '@/app/lib/types';
 import { FavoriteHeart } from './favorite-heart';
 import { EnhancedImage } from './enhanced-image';
 import { gridSizeAtom, getGridClasses } from '@/app/state/grid';
-import { deduplicateImages, addUniqueImages } from '@/app/state/images';
+import { allImagesAtom, addImagesAtom, initializeImagesAtom } from '@/app/state/images';
 
 interface MasonryGridProps {
   images: UnsplashImage[];
@@ -98,7 +98,9 @@ interface MasonryGridWithLoadMoreProps {
 }
 
 const MasonryGridWithLoadMore = ({ initialImages }: MasonryGridWithLoadMoreProps) => {
-  const [images, setImages] = useState<UnsplashImage[]>([]);
+  const images = useAtomValue(allImagesAtom);
+  const addImages = useSetAtom(addImagesAtom);
+  const initializeImages = useSetAtom(initializeImagesAtom);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(2); // Start from page 2 since initial is page 1
   const gridSize = useAtomValue(gridSizeAtom);
@@ -107,11 +109,10 @@ const MasonryGridWithLoadMore = ({ initialImages }: MasonryGridWithLoadMoreProps
 
   // Initialize images on mount ONLY ONCE
   useEffect(() => {
-    if (images.length === 0) {
-      const deduplicatedImages = deduplicateImages(initialImages);
-      setImages(deduplicatedImages);
+    if (images.length === 0 && initialImages.length > 0) {
+      initializeImages(initialImages);
     }
-  }, [initialImages, images.length]);
+  }, [initialImages, images.length, initializeImages]);
 
   const loadMore = async () => {
     setLoading(true);
@@ -127,8 +128,8 @@ const MasonryGridWithLoadMore = ({ initialImages }: MasonryGridWithLoadMoreProps
       const newImages = await response.json();
 
       if (newImages.length > 0) {
-        // Add images with deduplication
-        setImages((currentImages) => addUniqueImages(currentImages, newImages));
+        // Add images with deduplication using global atom
+        addImages(newImages);
         setPage((currentPage) => currentPage + 1);
       }
     } catch (error) {
