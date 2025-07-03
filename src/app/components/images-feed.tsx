@@ -72,7 +72,7 @@ export default function ImagesFeed({ initialImages }: ImagesFeedProps) {
         <button
           onClick={loadMore}
           disabled={loading}
-          className="px-6 py-3 bg-gray-800 hover:bg-gray-900 disabled:bg-gray-500 text-white rounded-lg font-medium transition-colors"
+          className="px-6 py-3 bg-secondary hover:bg-accent disabled:bg-muted text-secondary-foreground hover:text-accent-foreground rounded-lg font-medium transition-colors"
         >
           {loading ? 'Loading...' : 'Load More'}
         </button>

@@ -20,16 +20,14 @@ export function GridSizeToggle() {
   return (
     <div className="flex items-center justify-between">
       <span className="text-sm font-medium">columns</span>
-      
+
       <div className="flex items-center space-x-1">
         {Object.entries(GRID_SIZES).map(([size, columns]) => (
           <button
             key={size}
             onClick={() => setGridSize(size as GridSize)}
             className={`px-2 py-1 text-xs rounded transition-colors ${
-              gridSize === size 
-                ? 'bg-gray-700 text-gray-100' 
-                : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
+              gridSize === size ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
             }`}
             aria-label={`Set grid to ${columns} columns`}
           >

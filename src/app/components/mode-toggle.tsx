@@ -28,8 +28,8 @@ export function ModeToggle() {
           onClick={() => setTheme('light')}
           className={`p-2 rounded-md transition-colors ${
             theme === 'light' 
-              ? 'bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900' 
-              : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+              ? 'bg-accent text-accent-foreground' 
+              : 'hover:bg-accent hover:text-accent-foreground'
           }`}
           aria-label="Light mode"
         >
@@ -40,8 +40,8 @@ export function ModeToggle() {
           onClick={() => setTheme('dark')}
           className={`p-2 rounded-md transition-colors ${
             theme === 'dark' 
-              ? 'bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900' 
-              : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+              ? 'bg-accent text-accent-foreground' 
+              : 'hover:bg-accent hover:text-accent-foreground'
           }`}
           aria-label="Dark mode"
         >
@@ -52,8 +52,8 @@ export function ModeToggle() {
           onClick={() => setTheme('system')}
           className={`p-2 rounded-md transition-colors ${
             theme === 'system' 
-              ? 'bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900' 
-              : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+              ? 'bg-accent text-accent-foreground' 
+              : 'hover:bg-accent hover:text-accent-foreground'
           }`}
           aria-label="System mode"
         >
