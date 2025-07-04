@@ -18,7 +18,7 @@ export function AnimatedImageCount({ count }: AnimatedImageCountProps) {
 
   return (
     <span className="whitespace-nowrap">
-      <motion.span>{rounded}</motion.span> {count === 1 ? 'image' : 'images'} retrieved
+      <motion.span>{rounded}</motion.span> {count === 1 ? 'image' : 'images'} loaded
     </span>
   );
 }

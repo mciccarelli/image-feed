@@ -4,6 +4,7 @@ import { useAtomValue } from 'jotai';
 import { allImagesAtom } from '@/app/state/images';
 import { favoriteImagesAtom } from '@/app/state/favorites';
 import { AnimatedImageCount } from './animated-image-count';
+import { AnimatedPageTitle } from './animated-page-title';
 import { usePathname } from 'next/navigation';
 
 interface PageHeaderProps {
@@ -25,11 +26,11 @@ export function PageHeader({ title, showImageCount = false }: PageHeaderProps) {
       <div className="flex items-center justify-between px-4 py-2 h-10">
         <div className="flex items-center space-x-3 min-w-0 flex-1">
           <div className="min-w-0 flex-1">
-            <h1 className="text-sm font-medium text-foreground truncate">{title}</h1>
+            <AnimatedPageTitle title={title} />
           </div>
         </div>
 
-        <div className="flex items-center space-x-4 text-xs text-muted-foreground font-mono">
+        <div className="flex items-center space-x-4 text-xs uppercase text-muted-foreground font-mono">
           {showImageCount && allImages.length > 0 && <AnimatedImageCount count={allImages.length} />}
           {text && <span className="truncate">{text}</span>}
         </div>

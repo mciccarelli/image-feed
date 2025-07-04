@@ -15,10 +15,10 @@ export function Sidebar() {
         {/* Logo/Brand */}
         <div className="px-3 py-2 border-b border-border h-10 flex items-center">
           <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <div className="w-5 h-5 bg-muted border border-border flex items-center justify-center">
-              <span className="text-muted-foreground font-bold text-xs">IF</span>
+            <div className="w-4 h-4 bg-muted border border-border flex items-center justify-center">
+              <span className="text-muted-foreground font-bold text-[8px]">IF</span>
             </div>
-            <span className="font-medium text-xs text-foreground uppercase tracking-wide">imagefeed</span>
+            <span className="text-sm text-foreground font-sans tracking-tight -translate-x-px">ImageFeed</span>
           </Link>
         </div>
 
@@ -47,14 +47,12 @@ export function Sidebar() {
               <Bookmark className="w-4 h-4" />
               <span className="text-xs uppercase tracking-wide">Saved</span>
             </Link>
-            
+
             {/* User Profile */}
             <div className="pt-2 border-t border-border/50 mt-2">
               <div className="flex items-center justify-between pl-3 pr-2 py-1.5">
                 <div className="flex items-center space-x-2 min-w-0 flex-1">
-                  <Avatar className="w-4 h-4">
-                    <AvatarFallback className="bg-muted border border-border text-muted-foreground text-xs font-mono">u</AvatarFallback>
-                  </Avatar>
+                  <Avatar className="w-4 h-4 bg-[#0000ff]"></Avatar>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-medium text-foreground truncate uppercase tracking-wide">guest</p>
                   </div>
