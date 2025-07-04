@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Skeleton } from '@/app/components/ui/skeleton';
 import { UnsplashImage } from '@/app/lib/types';
+import { cn } from '@/app/lib/utils';
 
 interface EnhancedImageProps {
   image: UnsplashImage;
@@ -23,7 +24,13 @@ export function EnhancedImage({ image, useHD, priority = false, className = '', 
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div
+      className={cn(
+        'relative w-full h-full overflow-hidden transition-transform duration-300 ease-in-out object-cover w-full',
+        !useHD && 'hover:scale-105',
+        fill ? 'h-full' : 'h-auto'
+      )}
+    >
       {!isLoaded && <Skeleton className="absolute inset-0 w-full h-full rounded-none" />}
 
       <Image
@@ -36,11 +43,6 @@ export function EnhancedImage({ image, useHD, priority = false, className = '', 
         sizes={sizes}
         className={className}
         onLoad={handleLoad}
-        style={{
-          objectFit: 'cover',
-          width: '100%',
-          height: fill ? '100%' : 'auto',
-        }}
       />
     </div>
   );
