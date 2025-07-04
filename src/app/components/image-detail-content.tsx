@@ -12,10 +12,10 @@ export function ImageDetailContent({ image }: ImageDetailContentProps) {
   const isLandscape = image.width > image.height;
 
   // Use 16/9 for landscape, 2/3 for portrait
-  const aspectRatioClass = isLandscape ? 'aspect-video max-w-4xl' : 'aspect-[2/3] max-w-3xl';
+  const aspectRatioClass = isLandscape ? 'aspect-video max-w-4xl' : 'aspect-[2/3] max-w-xl';
 
   return (
-    <div className="h-[50vh] md:h-full flex items-center justify-center p-4 md:p-20 bg-muted/30">
+    <div className="md:h-[calc(100dvh-40px)] flex items-center justify-center p-4 bg-muted/30">
       <div className={`relative w-full ${aspectRatioClass}`}>
         <EnhancedImage
           image={image}
