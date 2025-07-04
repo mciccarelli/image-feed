@@ -1,9 +1,8 @@
+import './globals.css';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
-import { ThemeProvider } from '@/app/components/theme-provider';
-import { Sidebar } from '@/app/components/sidebar';
-import { MobileNav } from '@/app/components/mobile-nav';
+import { ThemeProvider, Sidebar, MobileNav } from '@/app/components';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,6 +35,7 @@ export default function RootLayout({
             </div>
             <main className="md:ml-48 md:pt-10">{children}</main>
           </div>
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
