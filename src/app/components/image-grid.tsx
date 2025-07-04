@@ -52,10 +52,10 @@ const ImageGridWithLoadMore = ({ initialImages }: ImageGridWithLoadMoreProps) =>
   const addImages = useSetAtom(addImagesAtom);
   const initializeImages = useSetAtom(initializeImagesAtom);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(3); // Start from page 3
+  const [page, setPage] = useState(2); // Start from page 2
   const gridSize = useAtomValue(gridSizeAtom);
   const gridClasses = gridSize === 'medium' ? 'columns-1 sm:columns-2 md:columns-3' : 'columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5';
-  const perPage = 12;
+  const perPage = 24;
 
   // Initialize images on mount ONLY ONCE
   useEffect(() => {
