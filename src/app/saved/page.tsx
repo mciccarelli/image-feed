@@ -4,7 +4,7 @@ export default function SavedPage() {
   return (
     <>
       <PageHeader title="Saved Images" />
-      <main className="p-2 md:p-8">
+      <main className="p-4">
         <SavedImages />
       </main>
     </>

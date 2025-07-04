@@ -105,7 +105,7 @@ const ImageGridWithLoadMore = ({ initialImages }: ImageGridWithLoadMoreProps) =>
         </div>
       )}
 
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center my-4 md:my-12">
         <button
           onClick={loadMore}
           disabled={loading}
