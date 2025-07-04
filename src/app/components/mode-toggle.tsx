@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import * as motion from 'motion/react-client';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
@@ -32,17 +33,28 @@ export function ModeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="relative inline-flex h-7.5 w-14 items-center rounded-full bg-muted border border-border transition-all duration-300 ease-in-out hover:bg-accent"
+      className="relative inline-flex h-7.5 w-14 items-center rounded-full bg-muted border border-border hover:bg-accent"
       aria-label={`Switch to ${visualDark ? 'light' : 'dark'} mode`}
+      style={{
+        justifyContent: visualDark ? 'flex-end' : 'flex-start',
+        padding: '0.125rem',
+      }}
     >
-      <span
-        className="absolute h-6 w-6 transform rounded-full bg-background border border-border transition-transform duration-300 ease-in-out"
-        style={{
-          transform: visualDark ? 'translateX(1.75rem)' : 'translateX(0.125rem)',
+      <motion.div
+        className="h-6 w-6 rounded-full bg-background border border-border flex items-center justify-center"
+        layout
+        transition={{
+          type: 'spring',
+          visualDuration: 0.2,
+          bounce: 0.2,
         }}
-      />
-      <Sun className={`absolute left-2 h-3 w-3 transition-opacity ${visualDark ? 'opacity-40' : 'opacity-100'}`} />
-      <Moon className={`absolute right-2 h-3 w-3 transition-opacity ${visualDark ? 'opacity-100' : 'opacity-40'}`} />
+      >
+        {visualDark ? (
+          <Moon className="h-3 w-3" />
+        ) : (
+          <Sun className="h-3 w-3" />
+        )}
+      </motion.div>
     </button>
   );
 }

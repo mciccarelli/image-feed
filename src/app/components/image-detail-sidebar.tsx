@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Share2, Download, ExternalLink, Copy } from 'lucide-react';
+import { Share2, Download, Copy } from 'lucide-react';
 import { UnsplashImage } from '@/app/lib/types';
 import { FavoriteButton } from './favorite-button';
 
