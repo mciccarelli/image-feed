@@ -276,7 +276,7 @@ export function ImageDetailSidebar({ image }: ImageDetailSidebarProps) {
   ];
 
   return (
-    <div className="h-full overflow-y-auto font-mono text-xs bg-background">
+    <div className="h-full overflow-y-auto font-mono text-xs bg-background md:fixed md:top-10 md:right-0 md:w-64 border-l border-border">
       {sections.map((section) => (
         <div key={section.key} className="border-b border-border">
           <div className="px-3 py-2 bg-muted/50 border-b border-border">

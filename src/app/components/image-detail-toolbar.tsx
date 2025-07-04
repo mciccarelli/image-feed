@@ -15,16 +15,16 @@ interface ImageDetailToolbarProps {
 export function ImageDetailToolbar({ image }: ImageDetailToolbarProps) {
   const router = useRouter();
   const allImages = useAtomValue(allImagesAtom);
-  
+
   // Find current image index and determine if navigation should be shown
-  const currentIndex = allImages.findIndex(img => img.id === image.id);
+  const currentIndex = allImages.findIndex((img) => img.id === image.id);
   const hasNavigationContext = allImages.length > 0 && currentIndex !== -1;
   const hasPrevious = hasNavigationContext && currentIndex > 0;
   const hasNext = hasNavigationContext && currentIndex < allImages.length - 1;
-  
+
   const navigateTo = (direction: 'prev' | 'next') => {
     if (!hasNavigationContext) return;
-    
+
     const newIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
     if (newIndex >= 0 && newIndex < allImages.length) {
       const targetImage = allImages[newIndex];
@@ -33,7 +33,7 @@ export function ImageDetailToolbar({ image }: ImageDetailToolbarProps) {
   };
 
   return (
-    <div className="sticky md:fixed h-10 top-0 md:top-0 left-0 md:left-48 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border text-xs font-mono">
+    <div className="sticky top-16 md:fixed h-10 md:top-0 md:top-0 left-0 md:left-48 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border text-xs font-mono">
       <div className="flex items-center justify-between px-4 py-2">
         {/* Left side - Back button and title */}
         <div className="flex items-center space-x-3 min-w-0 flex-1">
@@ -62,7 +62,7 @@ export function ImageDetailToolbar({ image }: ImageDetailToolbarProps) {
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              
+
               <button
                 onClick={() => navigateTo('next')}
                 disabled={!hasNext}

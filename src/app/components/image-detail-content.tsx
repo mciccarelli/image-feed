@@ -15,7 +15,7 @@ export function ImageDetailContent({ image }: ImageDetailContentProps) {
   const aspectRatioClass = isLandscape ? 'aspect-video max-w-4xl' : 'aspect-[2/3] max-w-xl';
 
   return (
-    <div className="md:h-[calc(100dvh-40px)] flex items-center justify-center p-4 bg-muted/30">
+    <div className="w-full h-full flex items-center justify-center p-4">
       <div className={`relative w-full ${aspectRatioClass}`}>
         <FullSizeImage
           image={image}

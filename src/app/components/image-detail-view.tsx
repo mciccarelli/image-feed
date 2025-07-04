@@ -16,13 +16,13 @@ export function ImageDetailView({ image }: ImageDetailViewProps) {
       <ImageDetailToolbar image={image} />
 
       {/* Main content area */}
-      <div className="grid grid-cols-1 md:grid-cols-12 pt-16 md:pt-0">
-        {/* Image content */}
-        <div className="md:col-span-10 min-w-0 w-full md:h-calc(100dvh-40px) overflow-hidden">
+      <div className="flex flex-col md:flex-row">
+        {/* Image content - scrollable on desktop, stacked on mobile */}
+        <div className="flex-1 md:min-h-[calc(100dvh-40px)] bg-muted/30 flex items-center justify-center w-full h-full">
           <ImageDetailContent image={image} />
         </div>
-        {/* Sidebar - below image on mobile, right side on desktop */}
-        <div className="md:col-span-2 border-t md:border-t-0 md:border-l border-border bg-background md:h-dvh md:overflow-y-auto md:h-[calc(100dvh-40px)]">
+        {/* Sidebar - below image on mobile, fixed right on desktop */}
+        <div className="md:w-64 md:flex-shrink-0 border-t md:border-t-0 md:border-l border-border bg-background md:h-[calc(100dvh-80px)] md:overflow-y-auto">
           <ImageDetailSidebar image={image} />
         </div>
       </div>
