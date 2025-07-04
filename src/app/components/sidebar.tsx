@@ -23,7 +23,7 @@ export function Sidebar() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 pt-2">
+        <nav className="flex-1 pt-4">
           <div className="space-y-1">
             <Link
               href="/"
@@ -47,25 +47,25 @@ export function Sidebar() {
               <Bookmark className="w-4 h-4" />
               <span className="text-xs uppercase tracking-wide">Saved</span>
             </Link>
-          </div>
-        </nav>
-
-        {/* User Profile */}
-        <div className="px-3 py-2 border-t border-border">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 min-w-0 flex-1">
-              <Avatar className="w-5 h-5">
-                <AvatarFallback className="bg-muted border border-border text-muted-foreground text-xs font-mono">u</AvatarFallback>
-              </Avatar>
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-medium text-foreground truncate uppercase tracking-wide">guest</p>
+            
+            {/* User Profile */}
+            <div className="pt-2 border-t border-border/50 mt-2">
+              <div className="flex items-center justify-between pl-3 pr-2 py-1.5">
+                <div className="flex items-center space-x-2 min-w-0 flex-1">
+                  <Avatar className="w-4 h-4">
+                    <AvatarFallback className="bg-muted border border-border text-muted-foreground text-xs font-mono">u</AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-medium text-foreground truncate uppercase tracking-wide">guest</p>
+                  </div>
+                </div>
+                <button className="p-1 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors" aria-label="Logout">
+                  <LogOut className="w-3 h-3" />
+                </button>
               </div>
             </div>
-            <button className="p-1 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors" aria-label="Logout">
-              <LogOut className="w-3 h-3" />
-            </button>
           </div>
-        </div>
+        </nav>
 
         {/* Bottom Controls */}
         <div className="px-3 py-2 border-t border-border space-y-2">
