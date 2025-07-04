@@ -5,7 +5,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import Link from 'next/link';
 import { UnsplashImage } from '@/app/lib/types';
 import { FavoriteHeart } from './favorite-heart';
-import { EnhancedImage } from './enhanced-image';
+import { ThumbnailImage } from './thumbnail-image';
 import { gridSizeAtom } from '@/app/state/grid';
 import { allImagesAtom, addImagesAtom, initializeImagesAtom } from '@/app/state/images';
 
@@ -27,7 +27,7 @@ const ImageGrid = ({ images, keyPrefix = 'grid-' }: ImageGridProps) => {
           className="break-inside-avoid mb-4 overflow-hidden bg-card border border-border group relative"
         >
           <Link href={`/image/${image.id}`} className="block relative w-full">
-            <EnhancedImage
+            <ThumbnailImage
               image={image}
               priority={idx < 6}
               className="object-cover w-full h-auto"

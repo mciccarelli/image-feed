@@ -1,7 +1,7 @@
 export { AnimatedImageCount } from './animated-image-count';
-export { EnhancedImage } from './enhanced-image';
 export { FavoriteButton } from './favorite-button';
 export { FavoriteHeart } from './favorite-heart';
+export { FullSizeImage } from './full-size-image';
 export { GridSizeToggle } from './grid-size-toggle';
 export { ImageDetailContent } from './image-detail-content';
 export { ImageDetailSidebar } from './image-detail-sidebar';
@@ -14,3 +14,4 @@ export { PageHeader } from './page-header';
 export { SavedImages } from './saved-images';
 export { Sidebar } from './sidebar';
 export { ThemeProvider } from './theme-provider';
+export { ThumbnailImage } from './thumbnail-image';

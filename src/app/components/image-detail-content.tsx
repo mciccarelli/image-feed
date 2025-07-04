@@ -1,7 +1,7 @@
 'use client';
 
 import { UnsplashImage } from '@/app/lib/types';
-import { EnhancedImage } from './enhanced-image';
+import { FullSizeImage } from './full-size-image';
 
 interface ImageDetailContentProps {
   image: UnsplashImage;
@@ -17,9 +17,8 @@ export function ImageDetailContent({ image }: ImageDetailContentProps) {
   return (
     <div className="md:h-[calc(100dvh-40px)] flex items-center justify-center p-4 bg-muted/30">
       <div className={`relative w-full ${aspectRatioClass}`}>
-        <EnhancedImage
+        <FullSizeImage
           image={image}
-          useHD={true}
           fill
           className="object-contain"
           priority
