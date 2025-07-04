@@ -67,7 +67,7 @@ export function Sidebar() {
 
         {/* Bottom Controls */}
         <div className="px-3 py-2 border-t border-border space-y-2">
-          <div className="flex items-center justify-between">
+          <div className="hidden lg:flex items-center justify-between">
             <span className="text-xs text-muted-foreground uppercase tracking-wide">cols</span>
             <GridSizeToggle />
           </div>

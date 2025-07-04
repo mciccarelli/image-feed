@@ -16,22 +16,18 @@ interface ImageGridProps {
 
 const ImageGrid = ({ images, keyPrefix = 'grid-' }: ImageGridProps) => {
   const gridSize = useAtomValue(gridSizeAtom);
-  const gridClasses = gridSize === 'medium' ? 'columns-1 sm:columns-2 md:columns-3' : 'columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5';
+  const gridClasses = gridSize === 'medium' ? 'columns-1 sm:columns-2 lg:columns-3' : 'columns-1 sm:columns-2 lg:columns-5';
 
   return (
     <div className={`${gridClasses} gap-4 space-y-4`}>
       {images.map((image, idx) => (
-        <div
-          key={`${keyPrefix}${image.id}-${idx}`}
-          data-image-id={image.id}
-          className="break-inside-avoid mb-4 overflow-hidden group relative"
-        >
+        <div key={`${keyPrefix}${image.id}-${idx}`} data-image-id={image.id} className="break-inside-avoid mb-4 overflow-hidden group relative">
           <Link href={`/image/${image.id}`} className="block relative w-full">
             <ThumbnailImage
               image={image}
               priority={idx < 6}
               className="object-cover w-full h-auto"
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
             />
           </Link>
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
