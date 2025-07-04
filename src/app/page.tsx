@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <>
       <PageHeader title="Trending on Unsplash" showImageCount={true} />
-      <main className="p-4">
+      <main className="p-4 pt-4 md:pt-4">
         <ImageGridWithLoadMore initialImages={images} />
       </main>
     </>

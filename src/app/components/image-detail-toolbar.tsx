@@ -33,7 +33,7 @@ export function ImageDetailToolbar({ image }: ImageDetailToolbarProps) {
   };
 
   return (
-    <div className="md:fixed h-10 top-16 md:top-0 left-0 md:left-48 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border text-xs font-mono">
+    <div className="sticky md:fixed h-10 top-0 md:top-0 left-0 md:left-48 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border text-xs font-mono">
       <div className="flex items-center justify-between px-4 py-2">
         {/* Left side - Back button and title */}
         <div className="flex items-center space-x-3 min-w-0 flex-1">

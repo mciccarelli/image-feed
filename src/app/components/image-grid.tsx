@@ -24,7 +24,7 @@ const ImageGrid = ({ images, keyPrefix = 'grid-' }: ImageGridProps) => {
         <div
           key={`${keyPrefix}${image.id}-${idx}`}
           data-image-id={image.id}
-          className="break-inside-avoid mb-4 overflow-hidden bg-card border border-border group relative"
+          className="break-inside-avoid mb-4 overflow-hidden group relative"
         >
           <Link href={`/image/${image.id}`} className="block relative w-full">
             <ThumbnailImage
@@ -109,7 +109,7 @@ const ImageGridWithLoadMore = ({ initialImages }: ImageGridWithLoadMoreProps) =>
         <button
           onClick={loadMore}
           disabled={loading}
-          className="px-4 py-2 bg-foreground text-background hover:bg-foreground/90 disabled:bg-muted disabled:text-muted-foreground font-mono text-xs uppercase tracking-wider border border-foreground hover:border-foreground/90 disabled:border-border transition-all duration-200 disabled:cursor-not-allowed"
+          className="px-4 py-2 cursor-pointer bg-foreground text-background hover:bg-foreground/90 disabled:bg-muted disabled:text-muted-foreground font-mono text-xs uppercase tracking-wider border border-foreground hover:border-foreground/90 disabled:border-border transition-all duration-200 disabled:cursor-not-allowed"
         >
           {loading ? 'Loading...' : 'Load More'}
         </button>

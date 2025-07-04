@@ -16,7 +16,7 @@ export function ImageDetailView({ image }: ImageDetailViewProps) {
       <ImageDetailToolbar image={image} />
 
       {/* Main content area */}
-      <div className="grid grid-cols-1 md:grid-cols-12">
+      <div className="grid grid-cols-1 md:grid-cols-12 pt-16 md:pt-0">
         {/* Image content */}
         <div className="md:col-span-10 min-w-0 w-full md:h-calc(100dvh-40px) overflow-hidden">
           <ImageDetailContent image={image} />

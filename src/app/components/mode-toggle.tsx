@@ -45,15 +45,11 @@ export function ModeToggle() {
         layout
         transition={{
           type: 'spring',
-          visualDuration: 0.2,
-          bounce: 0.2,
+          duration: 0.3,
+          bounce: 0,
         }}
       >
-        {visualDark ? (
-          <Moon className="h-3 w-3" />
-        ) : (
-          <Sun className="h-3 w-3" />
-        )}
+        {visualDark ? <Moon className="h-3 w-3" /> : <Sun className="h-3 w-3" />}
       </motion.div>
     </button>
   );

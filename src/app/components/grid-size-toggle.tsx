@@ -38,13 +38,11 @@ export function GridSizeToggle() {
         layout
         transition={{
           type: 'spring',
-          visualDuration: 0.2,
-          bounce: 0.2,
+          duration: 0.3,
+          bounce: 0,
         }}
       >
-        <span className="text-xs font-mono font-normal">
-          {isLarge ? '5' : '3'}
-        </span>
+        <span className="text-xs font-mono font-normal">{isLarge ? '5' : '3'}</span>
       </motion.div>
     </button>
   );

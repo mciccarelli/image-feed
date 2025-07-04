@@ -5,7 +5,6 @@ import { Menu, Home, Bookmark, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ModeToggle } from './mode-toggle';
-import { GridSizeToggle } from './grid-size-toggle';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,7 +19,7 @@ export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="md:hidden bg-background border-b border-border">
+    <div className="md:hidden bg-background border-b border-border sticky top-0 z-50">
       <div className="flex items-center justify-between p-4">
         <Link href="/" className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-muted border border-border flex items-center justify-center">
@@ -60,16 +59,9 @@ export function MobileNav() {
             <DropdownMenuSeparator />
             <DropdownMenuLabel>settings</DropdownMenuLabel>
 
-            <DropdownMenuItem className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <span>cols</span>
-              </div>
-              <GridSizeToggle />
-            </DropdownMenuItem>
-
-            <DropdownMenuItem className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <span>theme</span>
+            <DropdownMenuItem className="flex items-center justify-between" onSelect={(e) => e.preventDefault()}>
+              <div className="flex items-center space-x-2 font-mono">
+                <span>THEME</span>
               </div>
               <ModeToggle />
             </DropdownMenuItem>
